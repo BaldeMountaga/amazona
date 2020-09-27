@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import './App.css';
-import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
     document.querySelector(".sidebar").classList.remove("open");
   }
   return (
-
+    
     <BrowserRouter>
     <div className="grid-container">
         <header className="header">
