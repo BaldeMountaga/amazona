@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 
@@ -40,8 +41,23 @@ function App() {
         </aside>
         <main className="main">
             <div className="content"> 
-              <Route path="/product/:id" component={ProductScreen} />
-              <Route path="/" exact={true} component={HomeScreen} />             
+              <Switch>
+                < Route exact path = "/"
+                component = {
+                  HomeScreen
+                }
+                />              <
+                Route path = "/cart"
+                component = {
+                  CartScreen
+                }
+                /> <
+                Route path = "/product/:id"
+                component = {
+                  ProductScreen
+                }
+                />
+              </Switch>
             </div>
         </main> 
         <footer className="footer">

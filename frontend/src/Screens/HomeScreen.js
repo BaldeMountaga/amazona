@@ -13,7 +13,6 @@ const dispatch = useDispatch();
 
 useEffect(() => {
   dispatch( listProducts());
-
   return () => {
     //
   }; 

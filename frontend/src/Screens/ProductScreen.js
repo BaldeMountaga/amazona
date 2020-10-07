@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import  { useDispatch, useSelector } from 'react-redux'
+import {
+    useHistory,
+    useParams,
+    Link
+} from 'react-router-dom';
 import { detailsProduct } from '../actions/productActions';
+import {addItemToCart} from '../actions/shopCartActions';
 
 
 function ProductScreen(props){
@@ -12,18 +17,23 @@ function ProductScreen(props){
     const productDetails = useSelector (state => state.productDetails);  
     const { product, loading, error } = productDetails;
     const dispatch = useDispatch();
+    const history = useHistory();
+    const params = useParams();
 
     useEffect(() => {
-        dispatch(detailsProduct(props.match.params.id)); //props.matach is not displaying the product
+        dispatch(detailsProduct(params.id));
         return () => {
            //
         }
     }, []);
 
     const handleAddToCart = () => {
-        props.history.push("/cart/" + props.match.params.id + "?qty=" +qty); //after fixing up do the same thing here
+        dispatch(addItemToCart({...product, qty}));
+        history.push("/cart");
     }
     
+    console.log('PRODUCT', product);
+
     return (
         <div>
             <div className="back-to-result">

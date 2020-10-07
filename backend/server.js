@@ -1,11 +1,29 @@
 const express = require('express');
+const cors = require('cors');
 const {products} = require('./data');
+const config = require('./config');
+const mongoose = require('mongoose');
+const userRoute = require('./routes/userRoute')
+const bodyParse = require('body-parser')
+require('dotenv').config();
+
 
 const app = express();
+app.use(cors());
+app.use(bodyParse.json());
+
+//connexion to mongodb
+mongoose.connect(config.MONGODB_URI, config.MONGOOSE_OPTS)
+    .then(()=>{
+        console.log("Successfully connected to the Database");
+    })
+    .catch(res => {
+        console.error("Some error occured");
+        console.error(res);
+    })
 
 app.get('/api/products/:id', (req, res) => {  
-    const productId = req.params.id;
-    const product = data.products.find( x => x._id === productId );
+    const product = products.find( x => x._id === Number(req.params.id) );
     if(product)
         res.send(product);
     else
@@ -17,7 +35,12 @@ app.get('/api/products', (req, res) => {
 });
 
 
-app.listen(5000, () => {
-    console.log("Server started at http://localhost: 5000")
-});
+app.use("/api/users", userRoute);
 
+
+// app.listen(5000, () => {
+//     console.log("Server started at http://localhost: 5000")
+// });
+
+
+module.exports = app;
