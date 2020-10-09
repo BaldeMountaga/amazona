@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParse.json());
 
-//connexion to mongodb
+// connexion to mongodb
 mongoose.connect(config.MONGODB_URI, config.MONGOOSE_OPTS)
     .then(()=>{
         console.log("Successfully connected to the Database");
@@ -27,20 +27,13 @@ app.get('/api/products/:id', (req, res) => {
     if(product)
         res.send(product);
     else
-        res.status(404).send({ msg: "Product Not Found." })
+        res.status(404).send({ msg: "Product Not Found." });
 });
 
 app.get('/api/products', (req, res) => {  
     res.send(products);
 });
 
-
-app.use("/api/users", userRoute);
-
-
-// app.listen(5000, () => {
-//     console.log("Server started at http://localhost: 5000")
-// });
-
+// app.use("/api/users", userRoute);
 
 module.exports = app;

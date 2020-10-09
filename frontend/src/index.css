@@ -248,9 +248,21 @@ a:hover{
 }
 .cart-name{
   flex: 8 1;
+  display: flex;
 }
 .cart-price{
   flex: 1 1;
   font-size: 2.5rem;
   text-align: right;
+}
+
+/* Product details in the cart*/
+.prod-name{
+
+}
+.qty{
+
+}
+.del-btn{
+  
 }

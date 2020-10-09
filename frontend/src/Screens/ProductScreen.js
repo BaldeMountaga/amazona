@@ -10,8 +10,6 @@ import {addItemToCart} from '../actions/shopCartActions';
 
 
 function ProductScreen(props){
-    //const {id} = useParams();
-    //  const product = data.products.find(x=> x._id === Number(id)); 
     
     const [qty, setQty] = useState(1);
     const productDetails = useSelector (state => state.productDetails);  

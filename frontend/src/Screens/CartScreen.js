@@ -4,10 +4,8 @@ import { Link, useHistory} from 'react-router-dom';
 import { addToCart, removeFormCart } from '../actions/cartActions';
 // import from '../components/cartScreen.css';
 
-
-
 function CartScreen(props) {
-    
+
     //access the cart from redux store
     const shopCart = useSelector(state => state.shopCart);
 
@@ -22,9 +20,6 @@ function CartScreen(props) {
         history.push("/signin?redirect=shipping");
     }
 
-    const addToCart = () => {
-        //implement add to cart
-    } 
     console.log('CART', shopCart);
     
     return (
@@ -44,13 +39,13 @@ function CartScreen(props) {
                                         <img src={item.img} alt="product"/>
                                     </div>                              
                                     <div className="cart-name">
-                                       <div>
+                                       <div className="prod-name">
                                            <Link to={"/product/" + item.product}>
                                                 {item.name}
                                            </Link>
                                             
                                         </div>
-                                        <div>
+                                        <div className="qty">
                                             Qty:
                                             <select value={item.qty} onChange={(e) => dispatch(addToCart(item.product, e.target.value))}>
                                             {/* the feature e.target.value is not working when I select the qty I am getting erros fix it*/}
@@ -58,7 +53,7 @@ function CartScreen(props) {
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                             </select>
-                                            <button type="button" className="button" onClick={() => removeFormCartHandler(item.product)}>
+                                            <button type="button" className="del-btn" onClick={() => removeFormCartHandler(item.product)}>
                                                 Delete
                                             </button>
                                         </div>

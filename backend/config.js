@@ -1,11 +1,8 @@
-// export default {
-//     MONGODB_URL: ProcessingInstruction.env.MONGODB_URL || 'mongodb://localhost/amazona'
-// }
 
 require('dotenv').config();
 
 const MONGODB_URI = process.env.MongoDB_URI;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT;   // you should have it defined in the .env file
 const MONGOOSE_OPTS = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -18,3 +15,4 @@ module.exports = {
     PORT,
     MONGOOSE_OPTS
 }
+
