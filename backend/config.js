@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const MONGODB_URI = process.env.MongoDB_URI;
+const JWT_SECRET = process.env.JWT_SECRET || 'somethingsecret';
 const PORT = process.env.PORT;   // you should have it defined in the .env file
 const MONGOOSE_OPTS = {
     useUnifiedTopology: true,
@@ -13,6 +14,7 @@ const MONGOOSE_OPTS = {
 module.exports = {
     MONGODB_URI,
     PORT,
-    MONGOOSE_OPTS
+    MONGOOSE_OPTS,
+    JWT_SECRET
 }
 

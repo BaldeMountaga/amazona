@@ -4,8 +4,14 @@ import './App.css';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import SigninScreen from './screens/SigninScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import  { useSelector } from 'react-redux'
 
 function App() {
+
+  const userSingin = useSelector(state=> state.userSingin);
+  const { userInfo } = {...userSingin};
 
   const openMenu = () => {
     document.querySelector(".sidebar").classList.add("open");
@@ -26,9 +32,10 @@ function App() {
             </div>
             <div className="header-links">
                 <a href="cart.html">Cart</a>
-                <a href="index.html">Sign In</a>
-                <a href="index.html">Register</a>
-                <a href="index.html">Admin</a>
+                {
+                  userInfo ? <Link to="/profile">{userInfo.name}</Link>
+                  : <Link to="/signin">Sign In</Link>
+                }
             </div>
         </header>
         <aside className="sidebar">
@@ -42,21 +49,11 @@ function App() {
         <main className="main">
             <div className="content"> 
               <Switch>
-                < Route exact path = "/"
-                component = {
-                  HomeScreen
-                }
-                />              <
-                Route path = "/cart"
-                component = {
-                  CartScreen
-                }
-                /> <
-                Route path = "/product/:id"
-                component = {
-                  ProductScreen
-                }
-                />
+                <Route path = "/signin" component = { SigninScreen}/>
+                <Route path = "/register" component = { RegisterScreen}/>
+                <Route path = "/product/:id" component = { ProductScreen }/>
+                <Route path = "/cart" component = { CartScreen }/> 
+                <Route path = "/" exact={true} component = { HomeScreen }/>            
               </Switch>
             </div>
         </main> 

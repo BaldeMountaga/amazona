@@ -4,13 +4,13 @@ const {products} = require('./data');
 const config = require('./config');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/userRoute')
-const bodyParse = require('body-parser')
+const bodyParser = require('body-parser')
 require('dotenv').config();
 
 
 const app = express();
 app.use(cors());
-app.use(bodyParse.json());
+app.use(bodyParser.json());
 
 // connexion to mongodb
 mongoose.connect(config.MONGODB_URI, config.MONGOOSE_OPTS)
@@ -34,6 +34,6 @@ app.get('/api/products', (req, res) => {
     res.send(products);
 });
 
-// app.use("/api/users", userRoute);
+app.use("/api/users", userRoute);
 
 module.exports = app;
