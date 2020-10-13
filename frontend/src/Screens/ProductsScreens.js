@@ -6,7 +6,7 @@ import { listProducts, saveProduct, deleteProduct } from '../actions/productActi
 function ProductsScreen(props){
     
     const[modalVisible, setModalVisible] = useState(false);
-    
+    //using hooks
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -38,6 +38,7 @@ function ProductsScreen(props){
            //
         }
     }, [successSave, successDelete]);
+    
     const openModal = (product) => {
         setModalVisible(true);
         
@@ -148,11 +149,11 @@ return(
                     <tbody>
                         {products.map(product => ( 
                         <tr key={product._id}>
-                            <td>{productList._id}</td>
-                            <td>{productList.name}</td>
-                            <td>{productList.price}</td>
-                            <td>{productList.category}</td>
-                            <td>{productList.brand}</td>
+                            <td>{product._id}</td>
+                            <td>{product.name}</td>
+                            <td>{product.price}</td>
+                            <td>{product.category}</td>
+                            <td>{product.brand}</td>
                             <td>
                                 <button className="button" onClick={() => openModal(product)}>Edit</button>
                                 {' '} 

@@ -60,17 +60,16 @@ function App() {
       dispatchAuthState: dispatchAuthState
       }}>
         <BrowserRouter>
-      
                   <Switch>
-                    <Route path = "/products" component = { ProductsScreen}/>
-                    <Route path = "/shipping" component = {ShippingScreen }/>
-                    <Route path = "/payment" component = {PaymentScreen }/>
-                    <Route path = "/placeorder" component = {PlaceOrderScreen }/>
-                    <Route path = "/signin" component = { SigninScreen}/>
-                    <Route path = "/register" component = { RegisterScreen}/>
-                    <Route path = "/product/:id" component = { ProductScreen }/>
-                    <Route path = "/cart" render = {()=> <CartScreen /> }/> 
-                    <Route path = "/" exact={true} component = { HomeScreen }/>            
+                      <Route path = "/products" component = { ProductsScreen}/>
+                      <Route path = "/shipping" component = {ShippingScreen }/>
+                      <Route path = "/payment" component = {PaymentScreen }/>
+                      <Route path = "/placeorder" component = {PlaceOrderScreen }/>
+                      <Route path = "/signin" component = { SigninScreen}/>
+                      <Route path = "/register" component = { RegisterScreen}/>
+                      <Route path = "/product/:id" component = { ProductScreen }/>
+                      <Route path = "/cart" render = {()=> <CartScreen /> }/> 
+                      <Route path = "/" exact={true} component = { HomeScreen }/>            
                   </Switch>
         </BrowserRouter>
     </AppContext.Provider>

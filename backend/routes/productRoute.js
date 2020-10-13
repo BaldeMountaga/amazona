@@ -1,5 +1,5 @@
 const express = require('express');
-const Product = require('../models/proudctModel');
+const Product = require('../models/productModel');
 const {isAuth, isAdmin} = require('../util.js');
 const router = express.Router();
 
@@ -58,12 +58,12 @@ router.put('/:id', isAuth, isAdmin, async (req, res) =>{
         product.category = req.body.category;
         product.countInStock = req.body.countInStock;
         product.description = req.body.description;
-        product.rating = req.body.rating;
-        product.numReviews = req.body.numReviews;
+        // product.rating = req.body.rating;
+        // product.numReviews = req.body.numReviews;
 
-        const updateProduct= await product.save();
-        if(updateProduct){
-            return res.status(200).send({ msg: "New Product Updated", data: updateProduct })
+        const updatedProduct= await product.save();
+        if(updatedProduct){
+            return res.status(200).send({ msg: "New Product Updated", data: updatedProduct })
         }
     }
     return res.status(500).send({ msg: "Error in updating Product."});  
