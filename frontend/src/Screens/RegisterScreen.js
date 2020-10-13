@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import  { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {register } from '../actions/userActions';
@@ -26,7 +28,22 @@ function RegisterScreen(props){
 
 const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    // dispatch(register(name, email, password));
+    if (password === rePassword) {
+        axios.post('/api/users/register', {
+            name: name,
+            email: email,
+            password: password
+        }).then(response=> {
+            console.log(response);
+            props.history.push(redirect);
+        })
+        .catch(exception=> {
+            console.log(exception);
+        })
+    } else {
+        console.log("Password mismatch")
+    }
 }
     
 return <div className="form">

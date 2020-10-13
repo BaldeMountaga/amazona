@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Link} from 'react-router-dom';
 
-import  { useSelector } from 'react-redux'
+import { AppContext } from '../App';
 
 
 
@@ -12,8 +12,7 @@ const openMenu = () => {
 
 const Header = () => {
 
-    const userSingin = useSelector(state=> state.userSingin);
-    const { userInfo } = {...userSingin};
+    const app_context = useContext(AppContext)
 
     return (
         
@@ -27,7 +26,7 @@ const Header = () => {
             <div className="header-links">
                 <a href="cart.html">Cart</a>
                 {
-                  userInfo ? <Link to="/profile">{userInfo.name}</Link>
+                  app_context.appState.isAuthenticated ? <Link to="/profile">{app_context.authState.name}</Link>
                   : <Link to="/signin">Sign In</Link>
                 }
             </div>

@@ -71,14 +71,14 @@ router.get("/createadmin", async (req, res) => {
  */
 router.get('/get-user', async(req, res)=> {
     const token = getAuthToken(req);
-    console.log(token);
     try {
         const decryptedData = jwt.verify(token, process.env.JWT_SECRET);
         if (!token && !decryptedData.id) {
             res.status(401).send({error: "Invalid Authorization Token"})
         }
-        user = await User.findById(decryptedData.id);
-        response.status(200).send({
+        user = await User.findById(decryptedData._id);
+        console.log(decryptedData)
+        res.status(200).send({
             name: user.name,
             email: user.email
         })

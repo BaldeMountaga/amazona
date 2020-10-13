@@ -2,19 +2,17 @@ import React from 'react';
 
 
 export const initialAuth = {
-    user: {
-        name: "",
-        email: ""
-    },
+    name: "",
+    email: ""
 }
 
 
-export const authReducer = (action, state) => {
+export const authReducer = (state, action) => {
     switch (action.type) {
         case "SET_USER":
             return {
-                ...state,
-                user: {...action.user}
+                name: action.name,
+                email: action.email
             }
         default:
             return initialAuth;

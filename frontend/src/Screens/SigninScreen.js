@@ -1,36 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import  { useDispatch, useSelector } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import Cookie from 'js-cookie';
 import { Link } from 'react-router-dom';
-import { signin } from '../actions/userActions';
 
-import Footer from '../components/Footer';
 import Base from '../components/Base';
+
+import {AppContext} from '../App';
 
 
 function SigninScreen(props){
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const userSignin = useSelector(state => state.userSignin);
-    const { loading, userInfo, error } = userSignin;
-    const dispatch = useDispatch();
 
     //redirectiing user
     const redirect = props.location.search?props.location.search.split("=")[1]: '/';
+
+    // mainAppContext
+    const app_context = useContext(AppContext);
     
     useEffect(() => {
-        if(userInfo){
+        if(app_context.appState.isAuthenticated){
             props.history.push(redirect);
         }
         return () => {
            //
         }
-    }, [userInfo]);
+    }, [app_context.appState.isAuthenticated]);
 
 const submitHandler = (e) => {
+    app_context.dispatchAppState({type: "SET_LOADING", is_loading: true})
     e.preventDefault();
-    dispatch(signin(email, password));
+    console.log({
+        email: email,
+        password: password
+    })
+    axios.post('/api/users/signin', {
+        email: email,
+        password: password
+    })
+    .then(response=> {
+        app_context.dispatchAuthState({type: "SET_USER", name: response.data.name, email: response.data.email})
+        app_context.dispatchAppState({type: "SET_AUTH", is_authenticated: true})
+        Cookie.set('auth_token', response.data.token)
+        props.history.push(redirect);
+        app_context.dispatchAppState({type: "SET_LOADING", is_loading: false})
+    })
+    .catch(exception=> {
+        console.log(exception);
+        app_context.dispatchAppState({type: "SET_ERROR", error: "An Error Occured"})
+        app_context.dispatchAppState({type: "SET_LOADING", is_loading: true})
+    })
+    app_context.dispatchAppState({type: "SET_LOADING", is_loading: false})
 }
+
     
 return (
     <>
@@ -40,8 +63,8 @@ return (
                     <ul className="form-container">
                         <li><h2>Sign-In</h2></li>
                         <li>
-                            {loading && <div>Loading...</div>}
-                            {error && <div>{error}</div>}
+                            {app_context.appState.isAuthenticated && <div>Loading...</div>}
+                            {app_context.appState.error && <div>{app_context.appState.error}</div>}
                         </li>
                         <li>
                             <label htmlFor="email">Email</label>

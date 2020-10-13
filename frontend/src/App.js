@@ -6,15 +6,16 @@ import {initialStore, storeReducer} from './native-reducers/storeReducer';
 import {initialAuth, authReducer} from './native-reducers/authReducer'
 
 import './App.css';
-import CartScreen from './screens/CartScreen';
-import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
-import SigninScreen from './screens/SigninScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ProductsScreen from './screens/ProductsScreens';
-import ShippingScreen from './screens/ShippingScreen';
-import PaymentScreen from './screens/PaymentScreen';
-import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import CartScreen from './Screens/CartScreen';
+import HomeScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
+import SigninScreen from './Screens/SigninScreen';
+import RegisterScreen from './Screens/RegisterScreen';
+import ProductsScreen from './Screens/ProductsScreens';
+import ShippingScreen from './Screens/ShippingScreen';
+import PaymentScreen from './Screens/PaymentScreen';
+import PlaceOrderScreen from './Screens/PlaceOrderScreen';
+import { initialAppState, mainAppReducer } from './native-reducers/mainAppReducer';
 
 
 export const AppContext = React.createContext();
@@ -23,27 +24,37 @@ function App() {
 
   const [storeState, dispatchStoreState] = useReducer(storeReducer, initialStore);
   const [authState, dispatchAuthState] = useReducer(authReducer, initialAuth);
+  const [appState, dispatchAppState] = useReducer(mainAppReducer, initialAppState);
 
-  // useEffect(()=> {
-  //   const cookie = document.cookie;
-  //   if (cookie) {
-  //     axios.get('/api/get-user', {
-  //       header: {
-  //         Authorization: `Bearer ${document.cookie.substring(10)}`
-  //       }
-  //     })
-  //   }
-  // }, [])
-
-  // storeState.products, storeState.cart
+  useEffect(()=> {
+    const cookie = document.cookie;
+    if (cookie) {
+      axios.get('/api/users/get-user', {
+        headers: {
+          Authorization: `Bearer ${document.cookie.substring(11)}`
+        }
+      })
+      .then(response=> {
+        dispatchAuthState({type: "SET_USER", name: response.data.name, email: response.data.email})
+        // console.log(response);
+        dispatchAppState({type: "SET_AUTH", is_authenticated: true})
+      })
+      .catch(exception=> {
+        console.log(exception)
+      })
+    }
+  }, [])
 
   return (
   
     <AppContext.Provider value={{
+      appState: appState,
+      dispatchAppState: dispatchAppState,
       storeState: storeState, 
       dispatchStoreState: dispatchStoreState,
       authState: authState,
-      dispatchAuthState: dispatchAuthState }}>
+      dispatchAuthState: dispatchAuthState
+      }}>
         <BrowserRouter>
       
                   <Switch>

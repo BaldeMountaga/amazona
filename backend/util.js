@@ -45,9 +45,9 @@ const isAdmin = (req, res, next) =>{
 const getAuthToken = (request) => {
     const auth = request.get("authorization");
     if (auth && auth.toLowerCase().startsWith('bearer')) {
-        return auth.substring(6)
-    }
-    return null;
+        return auth.substring(7)
+    }else {return null}
+    
 }
 
 module.exports= { getToken, isAuth, isAdmin, getAuthToken }
