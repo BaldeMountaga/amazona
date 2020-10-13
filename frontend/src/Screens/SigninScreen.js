@@ -42,7 +42,11 @@ const submitHandler = (e) => {
     .then(response=> {
         app_context.dispatchAuthState({type: "SET_USER", name: response.data.name, email: response.data.email})
         app_context.dispatchAppState({type: "SET_AUTH", is_authenticated: true})
-        Cookie.set('auth_token', response.data.token)
+        /**
+         * Cookies are deprecated
+         */
+        // Cookie.set('auth_token', response.data.token) 
+        localStorage.setItem("auth_token", response.data.token);
         props.history.push(redirect);
         app_context.dispatchAppState({type: "SET_LOADING", is_loading: false})
     })

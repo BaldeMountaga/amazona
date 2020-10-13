@@ -31,7 +31,11 @@ function App() {
     if (cookie) {
       axios.get('/api/users/get-user', {
         headers: {
-          Authorization: `Bearer ${document.cookie.substring(11)}`
+          /**
+           * Moved to use localstorage instead of cookiess, hence the code below
+           */
+          // Authorization: `Bearer ${document.cookie.substring(11)}`
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
         }
       })
       .then(response=> {
