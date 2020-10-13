@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+
 
 function HomeScreen(props){
   //defining hooks
 const productList = useSelector(state => state.productList);
 const { products, loading, error } = productList;
 const dispatch = useDispatch();
+
 
 useEffect(() => {
   dispatch( listProducts());
@@ -20,25 +24,36 @@ useEffect(() => {
 
 
 return loading ? <div>Loading...</div> : error ? <div>{error}</div> :
-<ul className="products">
-    {
-      products.map(product =>
-        <li key={product._id}>
-          <div className="product">
-              <Link to={'/product/' + product._id}>
-                <img className="product-img" src={product.img} alt="product" />
-              </Link>
-            
-              <div className="prouduct-name">
-                    <Link to={'/product/' + product._id}>{product.name}</Link>
-              </div>
-              <div className="prouduct-brand">{product.brand}</div>
-              <div className="product-price">{product.price}</div>
-              <div className="product-rating">{product.rating} Stars ({product.numReviews})</div>
-          </div>
-      </li>)
-    }
-  </ul>
+( 
+  <>
+    <Header />
+    <Sidebar />
     
+      <main className="main">
+          <div className="content"> 
+            <ul className="products">
+              {
+                products.map(product =>
+                  <li key={product._id}>
+                    <div className="product">
+                        <Link to={'/product/' + product._id}>
+                          <img className="product-img" src={product.img} alt="product" />
+                        </Link>
+                      
+                        <div className="prouduct-name">
+                              <Link to={'/product/' + product._id}>{product.name}</Link>
+                        </div>
+                        <div className="prouduct-brand">{product.brand}</div>
+                        <div className="product-price">{product.price}</div>
+                        <div className="product-rating">{product.rating} Stars ({product.numReviews})</div>
+                    </div>
+                </li>)
+              }
+            </ul>
+          </div>
+        </main>
+  </>
+)
+      
 }
 export default HomeScreen;

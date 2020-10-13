@@ -41,4 +41,13 @@ const isAdmin = (req, res, next) =>{
     return res.status(401).send({ msg: 'Admin Token is not valid' });
 }
 
-module.exports= { getToken, isAuth, isAdmin }
+
+const getAuthToken = (request) => {
+    const auth = request.get("authorization");
+    if (auth && auth.toLowerCase().startsWith('bearer')) {
+        return auth.substring(6)
+    }
+    return null;
+}
+
+module.exports= { getToken, isAuth, isAdmin, getAuthToken }

@@ -34,7 +34,7 @@ mongoose.connect(config.MONGODB_URI, config.MONGOOSE_OPTS)
 // app.get('/api/products', (req, res) => {  
 //     res.send(data.products);
 // });
-// Note there is no neet for the static since I am requesting it from the database
+// Note: there is no need for the static since I am requesting it from the database
 
 app.use("/api/users", userRoute);
 app.use('/api/products', productRoute);

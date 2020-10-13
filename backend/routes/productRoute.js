@@ -6,10 +6,24 @@ const router = express.Router();
 //requesting a product list
 router.get('/', async (req, res) =>{
     const products = await Product.find({});
+    console.log("All Products", products);
     res.send(products);
-})
+});
 
+//get product by id
+router.get('/:id', async (req, res) =>{
+    const product = await Product.findOne({_id: req.params.id});
+    if(product){
+        res.send(product);
+    }else{
+        res.status(404).send({ msg: 'Product not found'});
+    }
+    
+});
+
+//creating a product from the database
 router.post('/', isAuth, isAdmin, async (req, res) =>{
+    
     const product = new Product({
         name: req.body.name,
         price: req.body.price,
@@ -32,11 +46,11 @@ router.post('/', isAuth, isAdmin, async (req, res) =>{
 
 //update product
 router.put('/:id', isAuth, isAdmin, async (req, res) =>{
+    
     const productId = req.params.id;
     const product = await Product.findById({ _id: productId});
 
     if(product){
-
         product.name = req.body.name;
         product.price = req.body.price;
         product.image = req.body.image;
@@ -56,7 +70,6 @@ router.put('/:id', isAuth, isAdmin, async (req, res) =>{
 })
 
 //delete product
-//only those whose is auth and admin can delete a product
 
 router.delete('/:id', isAuth, isAdmin, async (req, res) =>{
     const deletedProduct = await Product.findById(req.params.id);

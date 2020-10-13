@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory} from 'react-router-dom';
 import { addToCart, removeFormCart } from '../actions/cartActions';
 // import from '../components/cartScreen.css';
+import {AppContext} from '../App.js';
+
+import Header from '../components/Header';
 
 function CartScreen(props) {
 
     //access the cart from redux store
-    const shopCart = useSelector(state => state.shopCart);
+    const shopCartOld = useSelector(state => state.shopCart);
+    const shopCart = []
+
+    const app_context = useContext(AppContext);
+    console.log("App Context:", app_context)
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -20,9 +27,11 @@ function CartScreen(props) {
         history.push("/signin?redirect=shipping");
     }
 
-    console.log('CART', shopCart);
+    console.log('CART', shopCartOld);
     
     return (
+        <>
+            <Header />
             <div className="cart">
                 {
                     shopCart.map(item => (
@@ -78,6 +87,7 @@ function CartScreen(props) {
                     </React.Fragment>))
                 }
             </div>
+        </>
     );
 }
 export default CartScreen;

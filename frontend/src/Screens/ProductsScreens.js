@@ -6,6 +6,7 @@ import { listProducts, saveProduct, deleteProduct } from '../actions/productActi
 function ProductsScreen(props){
     
     const[modalVisible, setModalVisible] = useState(false);
+    
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -14,11 +15,14 @@ function ProductsScreen(props){
     const [category, setCategory] = useState('');
     const [countInstock, setCountInstock] = useState('');
     const [description, setDescription] = useState('');
+    
     const productList = useSelector(state => state.productList);
     const {loading, products, error} = productList;
+    
     //implementing the save  button
     const productSave = useSelector(state => state.productSave);
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
+    
     //implementing the delete button
     const productDelete = useSelector(state => state.productDelete);
     const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
@@ -50,7 +54,16 @@ function ProductsScreen(props){
 
 const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveProduct({_id: id, name, price, image, brand, category, countInstock, description }));
+    dispatch(saveProduct({
+        _id: id, 
+        name, 
+        price, 
+        image, 
+        brand, 
+        category, 
+        countInstock, 
+        description 
+    }));
 }
 
 const deleteHandler = (product) =>{
@@ -76,31 +89,38 @@ return(
                             </li>
                             <li>
                                 <label htmlFor="name">Name</label>
-                                <input type="text" name="name" id="name" value={name}  onChange={(e) => setName(e.target.value)} />
+                                <input type="text" name="name" id="name" value={name}   />
+                                {/* onChange={(e) => setName(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="price">Price</label>
-                                <input type="number"  min="0" max="10000" step="1" name="price" id="price"value={price}  onChange={(e) => setPrice(e.target.value)} />
+                                <input type="number"  min="0" max="10000" step="1" name="price" id="price"value={price} />
+                                {/*  onChange={(e) => setPrice(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="image">Image</label>
-                                <input type="image" className="img-style" name="image" id="image" value={image}  onChange={(e) => setImage(e.target.value)} />
+                                <input type="text" name="image" id="image" value={image} />
+                                {/* onChange={(e) => setImage(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="brand">Brand</label>
-                                <input type="text" name="brand" id="brand" value={brand}  onChange={(e) => setBrand(e.target.value)} />
+                                <input type="text" name="brand" id="brand" value={brand}  />
+                                {/* onChange={(e) => setBrand(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="category">Category</label>
-                                <input type="text" name="category" id="category" value={category} onChange={(e) => setCategory(e.target.value)} />
+                                <input type="text" name="category" id="category" value={category}/>
+                                {/* onChange={(e) => setCategory(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="countInStock">CountInStock</label>
-                                <input type="number" name="CountInStock" id="CountInStock" value={countInstock}  onChange={(e) => setCountInstock(e.target.value)} />
+                                <input type="number" name="CountInStock" id="CountInStock" value={countInstock} />
+                                {/*  onChange={(e) => setCountInstock(e.target.value)} */}
                             </li>
                             <li>
                                 <label htmlFor="description">Description</label>
-                                <textarea  name="description" id="description" value={description}  onChange={(e) => setDescription(e.target.value)} />
+                                <textarea  name="description" id="description" value={description} />
+                                {/* onChange={(e) => setDescription(e.target.value)} */}
                             </li>
                             <li>
                                 <button type="submit" className="button primary">{id? "Update" : "Create"}</button>

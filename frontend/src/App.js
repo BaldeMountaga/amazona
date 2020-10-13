@@ -1,70 +1,66 @@
-import React from 'react';
+import React, { useEffect, useSelector, useReducer } from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+
+import {initialStore, storeReducer} from './native-reducers/storeReducer';
+import {initialAuth, authReducer} from './native-reducers/authReducer'
+
 import './App.css';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import  { useSelector } from 'react-redux'
 import ProductsScreen from './screens/ProductsScreens';
+import ShippingScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
+
+
+export const AppContext = React.createContext();
 
 function App() {
 
-  const userSingin = useSelector(state=> state.userSingin);
-  const { userInfo } = {...userSingin};
+  const [storeState, dispatchStoreState] = useReducer(storeReducer, initialStore);
+  const [authState, dispatchAuthState] = useReducer(authReducer, initialAuth);
 
-  const openMenu = () => {
-    document.querySelector(".sidebar").classList.add("open");
-  }
-  const closeMenu = () => {
-    document.querySelector(".sidebar").classList.remove("open");
-  }
+  // useEffect(()=> {
+  //   const cookie = document.cookie;
+  //   if (cookie) {
+  //     axios.get('/api/get-user', {
+  //       header: {
+  //         Authorization: `Bearer ${document.cookie.substring(10)}`
+  //       }
+  //     })
+  //   }
+  // }, [])
+
+  // storeState.products, storeState.cart
+
   return (
-    
-    <BrowserRouter>
-    <div className="grid-container">
-        <header className="header">
-            <div className="brand">
-                <button onClick={openMenu}>
-                    &#9776;
-                </button>
-                <Link to="/" >JONA-HETA</Link>
-            </div>
-            <div className="header-links">
-                <a href="cart.html">Cart</a>
-                {
-                  userInfo ? <Link to="/profile">{userInfo.name}</Link>
-                  : <Link to="/signin">Sign In</Link>
-                }
-            </div>
-        </header>
-        <aside className="sidebar">
-            <h3>Shopping Categories</h3>
-            <button className="sidebar-close-button" onClick={closeMenu}>X</button>
-            <ul>
-                <li><a href="index.html">Pants</a></li>
-                <li><a href="index.html">Shirts</a></li>
-            </ul>
-        </aside>
-        <main className="main">
-            <div className="content"> 
-              <Switch>
-                <Route path = "/products" component = { ProductsScreen}/>
-                <Route path = "/signin" component = { SigninScreen}/>
-                <Route path = "/register" component = { RegisterScreen}/>
-                <Route path = "/product/:id" component = { ProductScreen }/>
-                <Route path = "/cart" component = { CartScreen }/> 
-                <Route path = "/" exact={true} component = { HomeScreen }/>            
-              </Switch>
-            </div>
-        </main> 
-        <footer className="footer">
-            All right reserved.
-        </footer>
-    </div>
-    </BrowserRouter>
-  );
+  
+    <AppContext.Provider value={{
+      storeState: storeState, 
+      dispatchStoreState: dispatchStoreState,
+      authState: authState,
+      dispatchAuthState: dispatchAuthState }}>
+        <BrowserRouter>
+      
+                  <Switch>
+                    <Route path = "/products" component = { ProductsScreen}/>
+                    <Route path = "/shipping" component = {ShippingScreen }/>
+                    <Route path = "/payment" component = {PaymentScreen }/>
+                    <Route path = "/placeorder" component = {PlaceOrderScreen }/>
+                    <Route path = "/signin" component = { SigninScreen}/>
+                    <Route path = "/register" component = { RegisterScreen}/>
+                    <Route path = "/product/:id" component = { ProductScreen }/>
+                    <Route path = "/cart" render = {()=> <CartScreen /> }/> 
+                    <Route path = "/" exact={true} component = { HomeScreen }/>            
+                  </Switch>
+        </BrowserRouter>
+    </AppContext.Provider>
+  )
 }
+
 
 export default App;
