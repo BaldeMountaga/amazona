@@ -40,7 +40,6 @@ function App() {
       })
       .then(response=> {
         dispatchAuthState({type: "SET_USER", name: response.data.name, email: response.data.email})
-        // console.log(response);
         dispatchAppState({type: "SET_AUTH", is_authenticated: true})
       })
       .catch(exception=> {
