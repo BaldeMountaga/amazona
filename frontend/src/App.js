@@ -6,15 +6,15 @@ import {initialStore, storeReducer} from './native-reducers/storeReducer';
 import {initialAuth, authReducer} from './native-reducers/authReducer'
 
 import './App.css';
-import CartScreen from './Screens/CartScreen';
-import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
-import SigninScreen from './Screens/SigninScreen';
-import RegisterScreen from './Screens/RegisterScreen';
-import ProductsScreen from './Screens/ProductsScreens';
-import ShippingScreen from './Screens/ShippingScreen';
-import PaymentScreen from './Screens/PaymentScreen';
-import PlaceOrderScreen from './Screens/PlaceOrderScreen';
+import CartScreen from './screens/CartScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import SigninScreen from './screens/SigninScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ProductsScreen from './screens/ProductsScreens';
+import ShippingScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import { initialAppState, mainAppReducer } from './native-reducers/mainAppReducer';
 
 
