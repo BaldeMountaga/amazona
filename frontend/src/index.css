@@ -41,11 +41,16 @@ button{
   font-weight: bold;
   text-decoration: none;
 }
+/* .header-links{
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+} */
 .header-links a{
   color: #ffffff;
   text-decoration: none;
   padding-right: 15px;
-  /* see another way to put space between them */
+  vertical-align: middle;
 }
 .main{
   grid-area: main;
@@ -265,15 +270,7 @@ a:hover{
 }
 
 /* Product details in the cart*/
-/* .prod-name{
 
-}
-.qty{
-
-}
-.del-btn{
-  
-} */
 
 /* forms*/
 .form{
@@ -427,4 +424,13 @@ tbody>tr:nth-child(odd){
   border-radius: 50%;
   color:white;
   text-decoration:none;
+}
+
+/* Payment */
+.payment-style{
+  display: flex;
+  vertical-align: middle;
+}
+.form-container{
+
 }

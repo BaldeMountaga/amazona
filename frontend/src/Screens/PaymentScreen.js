@@ -3,7 +3,7 @@ import  { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {savePayment } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-
+import { FaCcPaypal } from "react-icons/fa";
 
 function PaymentScreen(props){
     
@@ -28,9 +28,8 @@ return <div>
                     </li>
                     <li>
                         <input type="radio" name="paymentMethod" id="paymentMethod" value="paypal" onChange={(e) => setPaymentMethod(e.target.value)} />
-                        <label htmlFor="paymentMethod">Paypal</label>
+                        <label className="payment-style" htmlFor="paymentMethod"><FaCcPaypal size="35"/></label>
                     </li>
-                    
                     
                     <li>
                         <button type="submit" className="button primary">Continue</button>
