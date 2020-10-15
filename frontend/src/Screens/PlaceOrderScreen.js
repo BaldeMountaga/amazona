@@ -50,7 +50,7 @@ function PlaceOrderScreen(props) {
                                     <h3>Shipping</h3>
                                     <div>
                                         {cartReducer.shipping.address}, {cartReducer.shipping.city},
-                                        {cartReducer.shipping.postalCode}, {cartReducer.shipping.country},
+                                        {cartReducer.shipping.postalCode}, {cartReducer.shipping.country}
                                     </div>
                                 </div>
                                 {/**method of payment */}

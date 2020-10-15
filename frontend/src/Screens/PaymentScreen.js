@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import  { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import {savePayment } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { FaCcPaypal } from "react-icons/fa";
