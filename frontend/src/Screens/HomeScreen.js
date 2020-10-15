@@ -16,7 +16,7 @@ useEffect(() => {
     axios.get('/api/products/')
     .then(response=> {
       console.log(response.data);
-      app_context.dispatchStoreState({key: "SET_PRODUCTS", payload: response.data})
+      app_context.dispatchStoreState({type: "SET_PRODUCTS", payload: response.data})
     })
     .catch(exception=> {
       console.log(exception);
