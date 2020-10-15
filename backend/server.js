@@ -12,6 +12,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded)
 
 // connexion to mongodb
 mongoose.connect(config.MONGODB_URI, config.MONGOOSE_OPTS)

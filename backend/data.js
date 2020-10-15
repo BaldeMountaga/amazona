@@ -110,7 +110,7 @@ module.exports= {
         countInStock: 6
     },
     {
-        _id: 11,
+        _id: 11,    
         name: 'Best Racksack',
         category: 'Pants',
         img:'/images/d11.jpg',

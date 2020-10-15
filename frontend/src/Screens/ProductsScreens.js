@@ -10,8 +10,7 @@ function ProductsScreen(props){
     const store_context = useContext(AppContext);
     
 return(
-
-
+    
     <div>
         <div className="content content-margined">
             <div className="product-header">

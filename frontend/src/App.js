@@ -62,7 +62,7 @@ function App() {
         <BrowserRouter>
                   <Switch>
                       <Route exact={true} path = "/products" component = { ProductsScreen}/>
-                      <Route path="/products/new" render={()=> <AddProduct /> } />
+                      <Route path="/products/new" component={AddProduct} />
                       <Route path = "/shipping" component = {ShippingScreen }/>
                       <Route path = "/payment" component = {PaymentScreen }/>
                       <Route path = "/placeorder" component = {PlaceOrderScreen }/>

@@ -1,6 +1,10 @@
 //const { config } = require( 'dotenv/types');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+const GridFSStorage = require('multer-gridfs-storage');
+const multer = require('multer');
+const { path } = require('./server');
+
 
 const getToken = (user) =>{
     return jwt.sign({
@@ -34,6 +38,12 @@ const isAuth = (req, res, next) => {
     
 }
 
+/**
+ * MIddleware for validating that a user is an Admin
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const isAdmin = (req, res, next) =>{
     if(req.user && req.user.isAdmin){
         return next();
@@ -51,4 +61,29 @@ const getAuthToken = (request) => {
     
 }
 
-module.exports= { getToken, isAuth, isAdmin, getAuthToken }
+/**
+ * configure to add image to database
+ */
+const storage = new GridFSStorage({
+    url: config.MONGODB_URI,
+    file: (request, file) => {
+        console.log("Uploading file");
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf)=> {
+                if (err) {
+                    return reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: "uploads"
+                };
+                resolve(fileInfo);
+            });
+        });
+    }
+});
+
+const upload = multer({storage})
+
+module.exports= { getToken, isAuth, isAdmin, getAuthToken, upload }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory} from 'react-router-dom';
-import { addToCart, removeFormCart } from '../actions/cartActions';
+//import { addToCart, removeFormCart } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { cartReducer } from '../reducers/cartReducers';
 // import from '../components/cartScreen.css';

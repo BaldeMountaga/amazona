@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import {Link} from 'react-router-dom';
 import { GiShoppingCart } from "react-icons/gi";
-import { BiSearchAlt2 } from "react-icons/bi";
+
 
 import { AppContext } from '../App';
+import Search from './Search';
 
 
 
@@ -31,14 +32,7 @@ const Header = () => {
                 <Link to="/" >JONA-HETA</Link>
             </div>
             {/* search bar */}
-            <div className="container h-100">
-                <div className="d-flex justify-content-center h-100">
-                    <div className="searchbar">
-                        <input className="search_input" type="text" name=""  />
-                            <a href="#" className="search_icon">< BiSearchAlt2 size="25"/></a>
-                    </div>
-                </div>
-            </div>
+            < Search />
             <div className="header-links">
                 <a href="cart.html"><GiShoppingCart size="30"/></a>
                                 
