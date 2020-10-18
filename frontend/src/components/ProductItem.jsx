@@ -22,6 +22,7 @@ function ProductItem(props) {
         <div style={containerStyle}>
             <p style={priceStyle}>${props.price}</p>
             <p style={nameStyle}>{props.name}</p>
+            <button>Add to card</button><button></button>
         </div>
     );
 }

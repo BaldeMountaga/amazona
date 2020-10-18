@@ -40,9 +40,7 @@ const isAuth = (req, res, next) => {
 
 /**
  * MIddleware for validating that a user is an Admin
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ *
  */
 const isAdmin = (req, res, next) =>{
     if(req.user && req.user.isAdmin){

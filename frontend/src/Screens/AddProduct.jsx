@@ -73,6 +73,7 @@ const AddProduct = props => {
             description: description
         }   
         
+        //
         axios.post('/api/products/', productItem, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('auth_token')}`
