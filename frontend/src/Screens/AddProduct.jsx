@@ -63,20 +63,30 @@ const AddProduct = props => {
 
     const addProduct = e => {
         e.preventDefault();
-        const productItem = {
-            name: name,
-            price: price,
-            image: image,
-            brand: brand,
-            category: category,
-            countInstock: countInstock,
-            description: description
-        }   
-        
+        // const productItem = {
+        //     name: name,
+        //     price: price,
+        //     image: image,
+        //     brand: brand,
+        //     category: category,
+        //     countInstock: countInstock,
+        //     description: description
+        // }
+
+        const productFormData = new FormData()
+        productFormData.append("name", name)
+        productFormData.append("price", price)
+        productFormData.append("image", image)
+        productFormData.append("brand", brand)
+        productFormData.append("category", category)
+        productFormData.append("countInStock", countInstock)
+        productFormData.append("description", description)
+
         //
-        axios.post('/api/products/', productItem, {
+        axios.post('/api/products/', productFormData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('auth_token')}`
+                Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+                ContentType: "multipart/form-data"
             }
         })
         .then(response=> {
@@ -84,7 +94,7 @@ const AddProduct = props => {
             props.history.push(redirect)
         })
         .catch(exception=> {
-            console.log(exception);
+            console.log(exception.response.data);
         })
         
     }
@@ -97,7 +107,7 @@ const AddProduct = props => {
                     <form onSubmit={addProduct} style={formStyles}>
                         <FormGroup onChange={(e)=> setName(e.target.value)} value={name} label="Name" />
                         <FormGroup onChange={(e)=> setPrice(e.target.value)} value={price} label="Price" />
-                        {/* <FormGroup type='file' onChange={(e)=> setImage(e.target.files[0])} label="Image" /> */}
+                         <FormGroup type='file' onChange={(e)=> setImage(e.target.files[0])} label="Image" />
                         <FormGroup onChange={(e)=> setBrand(e.target.value)} value={brand} label="Brand" />
                         <FormGroup onChange={(e)=> setCategory(e.target.value)} value={category} label="Category" />
                         <FormGroup onChange={(e)=> setCountInstock(e.target.value)} value={countInstock} label="CountInStock" />

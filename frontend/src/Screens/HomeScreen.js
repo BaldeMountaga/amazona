@@ -54,7 +54,7 @@ return app_context.appState.isLoading ? <div>Loading...</div> : app_context.appS
                   //         <div className="product-rating">{product.rating} Stars ({product.numReviews})</div>
                   //     </div>
                   // </li>
-                  <ProductItem {...product} />
+                  <ProductItem key={product._id} {...product} />
                   )
                 }
               </ul>

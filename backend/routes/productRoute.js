@@ -70,9 +70,6 @@ router.get('/:id', async (req, res) =>{
 
 //creating a product from the database
 router.post('/', isAuth, isAdmin, cloudUpload.single('image'), async (req, res) =>{
-    console.log(req.file.path);
-
-    const image = await req.file;
 
     const product = new Product({
         name: req.body.name,
@@ -81,7 +78,7 @@ router.post('/', isAuth, isAdmin, cloudUpload.single('image'), async (req, res) 
         category: req.body.category,
         countInStock: req.body.countInStock,
         description: req.body.description,
-        image: image.path
+        image: req.file.filename
         // rating: req.body.rating,
         // numReviews: req.body.numReviews
     });

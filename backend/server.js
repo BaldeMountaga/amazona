@@ -44,8 +44,8 @@ app.use('/api/products', productRoute);
 app.get('/image/:image', async(req, res) => {
     // debugger;
     const db = mongoose.connection.db;
-    const collection = db.collection('upload.files');
-    const collectionChunks = db.collection('upload.chunks')
+    const collection = db.collection('uploads.files');
+    const collectionChunks = db.collection('uploads.chunks')
 
     // const db = mongoose.connection;
     // db.on('error', console.error.bind(console, 'connection error'));
@@ -54,6 +54,7 @@ app.get('/image/:image', async(req, res) => {
     // })
 
     console.log(req.params.image)
+    console.log(collection);
 
     collection.find({filename: req.params.image}).toArray(function(err, docs){
         if (err){
@@ -77,7 +78,7 @@ app.get('/image/:image', async(req, res) => {
                 }
 
                 let finalFile = 'data:' + docs[0].contentType + ';base64,'
-                + finalData.join('');
+                + fileData.join('');
                 res.status(200).send({imageUrl: finalFile})
             })
         }
