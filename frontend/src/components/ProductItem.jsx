@@ -1,6 +1,8 @@
 import React from 'react';
+import { GiShoppingCart } from "react-icons/gi";
 
 function ProductItem(props) {
+
     const containerStyle = {
         borderRadius: "0.7rem",
         padding: "1.5rem 2.8rem 0 1.5rem",
@@ -17,13 +19,21 @@ function ProductItem(props) {
     const nameStyle = {
         fontSize: 14
     }
+   
+    // const addToCart = () => {
+
+    // }
 
     return (
-        <div style={containerStyle}>
-            <p style={priceStyle}>${props.price}</p>
-            <p style={nameStyle}>{props.name}</p>
-            <button>Add to card</button><button></button>
-        </div>
+            <div style={containerStyle} className="cart-content">
+                <p style={priceStyle}>${props.price}</p>
+                <p style={nameStyle}>{props.name}</p>
+                <div className="cartContent">
+                        <button className="btnStyle" >Add to card 
+                            <a className="iconStyle" href="#"><GiShoppingCart size="20"/></a>
+                        </button>
+                </div>
+            </div>
     );
 }
 
