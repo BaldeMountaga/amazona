@@ -1,8 +1,10 @@
 const express = require('express');
+const { mongoose } = require('mongoose');
 const multer = require('multer');
 const Product = require('../models/productModel');
-const {isAuth, isAdmin, upload} = require('../util.js');
+const {isAuth, isAdmin, cloudUpload, localUpload} = require('../util.js');
 const router = express.Router();
+
 
 //requesting a product list
 router.get('/', async (req, res) =>{
@@ -10,6 +12,50 @@ router.get('/', async (req, res) =>{
     console.log("All Products", products);
     res.send(products);
 });
+
+
+// Get Product Image
+router.get('/image/:name', async(req, res) => {
+    // const db = mongoose.connection.db;
+    // const collection = db.collection('upload.files');
+    // const collectionChunks = db.collection('upload.chunks')
+
+    console.log("Modified")
+    // const db = mongoose.connection;
+    // db.on('error', console.error.bind(console, 'connection error'));
+    // db.once('open', function cb(){
+    //     console.log('Connection success');
+    // })
+
+    // collection.find({filename: request.params.image}).toArray(function(err, docs){
+    //     if (err){
+    //         return res.status(500).send({error: "INTERNAL SERVER ERROR"})
+    //     }
+    //     if (!docs || docs.length === 0) {
+    //         return res.status(404).send({error: "File Not Found"})
+    //     }else {
+    //         collectionChunks.find({files_id: docs[0]._id})
+    //         .sort({n:1}).toArray(function(err, chunks){
+    //             if (err) {
+    //                 res.status(500).send({error: "ERROR DOWNLOADING FILE"})
+    //             }
+    //             if (!chunks || chunks.length === 0) {
+    //                 res.status(404).send({error: "NO DATA"})
+    //             }
+
+    //             let fileData = [];
+    //             for (let i=0; i<chunks.length; i++) {
+    //                 fileData.push(chunks[i].data.toString('base64'));
+    //             }
+
+    //             let finalFile = 'data:' + docs[0].contentType + ';base64,'
+    //             + finalData.join('');
+    //             res.status(200).send({imageUrl: finalFile})
+    //         })
+    //     }
+    // })
+
+})
 
 //get product by id
 router.get('/:id', async (req, res) =>{
@@ -23,11 +69,10 @@ router.get('/:id', async (req, res) =>{
 });
 
 //creating a product from the database
-router.post('/', isAuth, isAdmin, async (req, res) =>{
-    // upload.single('image')
-    console.log(upload)
-    // code added
-    console.log(req.body);
+router.post('/', isAuth, isAdmin, cloudUpload.single('image'), async (req, res) =>{
+    console.log(req.file.path);
+
+    const image = await req.file;
 
     const product = new Product({
         name: req.body.name,
@@ -36,6 +81,7 @@ router.post('/', isAuth, isAdmin, async (req, res) =>{
         category: req.body.category,
         countInStock: req.body.countInStock,
         description: req.body.description,
+        image: image.path
         // rating: req.body.rating,
         // numReviews: req.body.numReviews
     });

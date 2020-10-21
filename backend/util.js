@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const config = require('./config');
 const GridFSStorage = require('multer-gridfs-storage');
 const multer = require('multer');
-const { path } = require('./server');
+const path = require('path')
+const crypto = require('crypto');
 
 
 const getToken = (user) =>{
@@ -69,9 +70,10 @@ const storage = new GridFSStorage({
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buf)=> {
                 if (err) {
+                    console.log("Error occured");
                     return reject(err);
                 }
-                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const filename = new Date().toISOString() + buf.toString('hex') + path.extname(file.originalname);
                 const fileInfo = {
                     filename: filename,
                     bucketName: "uploads"
@@ -82,6 +84,37 @@ const storage = new GridFSStorage({
     }
 });
 
-const upload = multer({storage})
 
-module.exports= { getToken, isAuth, isAdmin, getAuthToken, upload }
+const localStorage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname)
+    }
+})
+
+
+const imageOnlyFilter = (req, file, cb) => {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const localUpload = multer(
+    {
+        storage: localStorage, 
+        limits: 1024 * 1024 * 4,
+        fileFilter: imageOnlyFilter
+    }
+)
+
+const cloudUpload = multer({
+    storage: storage,
+    fileFilter: imageOnlyFilter,
+    limits: 1024 * 1024 * 4
+})
+
+module.exports= { getToken, isAuth, isAdmin, getAuthToken, cloudUpload, localUpload }
