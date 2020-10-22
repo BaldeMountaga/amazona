@@ -31,12 +31,12 @@ const Header = () => {
                 </button>
                 <Link to="/" >JONA-HETA</Link>
             </div>
-            {/* search bar */}
             < Search />
             <div className="header-links">
-                <a href="#"><GiShoppingCart size="30"/><sup className="number">0</sup></a>              
+                <a href="/cart"><GiShoppingCart size="30"/><sup className="number">0</sup></a>              
                 {
-                  app_context.appState.isAuthenticated ? <><Link to="/profile">{app_context.authState.name}</Link> <a href="#" onClick={logout}>Logout</a></>
+                  app_context.appState.isAuthenticated ? <><Link to="/profile">{app_context.authState.name}</Link>
+                   <a href="#" onClick={logout}>Logout</a></>
                   : <Link to="/signin">Sign In</Link>
                 }
             </div>

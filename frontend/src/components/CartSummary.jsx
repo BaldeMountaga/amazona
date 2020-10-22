@@ -2,11 +2,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
-/**
- *
- * CartSummary
- *
-*/
 
 const CartSummary = props => {
   const { cartTotal } = props;
