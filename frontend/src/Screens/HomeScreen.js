@@ -16,7 +16,6 @@ useEffect(() => {
   if (app_context.storeState.products.length <= 0) {
     axios.get('/api/products/')
     .then(response=> {
-      console.log(response.data);
       app_context.dispatchStoreState({type: "SET_PRODUCTS", payload: response.data})
     })
     .catch(exception=> {

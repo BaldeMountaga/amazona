@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory} from 'react-router-dom';
-import { addToCart, removeFormCart } from '../actions/cartActions';
 // import from '../components/cartScreen.css';
 import {AppContext} from '../App.js';
 
@@ -9,26 +8,33 @@ import Header from '../components/Header';
 
 function CartScreen(props) {
 
-    //access the cart from redux store
-    const shopCartOld = useSelector(state => state.shopCart);
-    const shopCart = []
 
     const app_context = useContext(AppContext);
-    console.log("App Context:", app_context)
+    let shopCart = app_context.storeState.cart
 
-    const dispatch = useDispatch();
-    const history = useHistory();
-    
-    const removeFormCartHandler = (productId) => {
-        dispatch(removeFormCart(productId));
+    let allPrices = []
+    if (shopCart.length > 0) {
+        shopCart.map((item)=> allPrices.push(item.price) )
+     }
+    const total = allPrices.reduce((a, b)=> {return a + b}, 0)
+    console.log("All PRices", allPrices);
+    // console.log("First Cart ITem price", shopCart[0].price);
+
+
+    const getImage = name => {
+        const images = app_context.storeState.productImages;
+        let imageSrc;
+        for (let image of images) {
+            // console.log(image.name, ":", name)
+            if (image.name == name) {
+                imageSrc = image.src;
+            }
+        }
+        console.log("All images:", images)
+        console.log("imageSrc", imageSrc)
+        return imageSrc;
     }
 
-    const chechoutHandler = () => {
-        history.push("/signin?redirect=shipping");
-    }
-
-    console.log('CART', shopCartOld);
-    
     return (
         <>
             <Header />
@@ -45,7 +51,7 @@ function CartScreen(props) {
                                 </li> 
                                 <li>
                                     <div className="cart-image">
-                                        <img src={item.img} alt="product"/>
+                                        <img src={getImage(item.image)} alt="product"/>
                                     </div>                              
                                     <div className="cart-name">
                                        <div className="prod-name">
@@ -56,13 +62,13 @@ function CartScreen(props) {
                                         </div>
                                         <div className="qty">
                                             Qty:
-                                            <select value={item.qty} onChange={(e) => dispatch(addToCart(item.product, e.target.value))}>
+                                            <select value={item.qty}>
                                             {/* the feature e.target.value is not working when I select the qty I am getting erros fix it*/}
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                             </select>
-                                            <button type="button" className="del-btn" onClick={() => removeFormCartHandler(item.product)}>
+                                            <button type="button" className="del-btn">
                                                 Delete
                                             </button>
                                         </div>
@@ -73,20 +79,20 @@ function CartScreen(props) {
                                 </li>
                             </ul>
                         </div>
-                        <div className="cart-action">
-                                <h3>
-                                    Subtotal ( {shopCart.reduce((a, c) => a + c.qty, 0)} items) 
-                                    :
-                                    ${shopCart.reduce((a, c) => a + c.price * c.qty, 0)}
-                                
-                                </h3>
-                                <button className="button primary full-width" type="button" onClick={chechoutHandler} 
-                                disabled={shopCart.length === 0}>
-                                    Proceed to chechout
-                                </button>
-                        </div>
                     </React.Fragment>))
                 }
+            </div>
+            <div className="cart-action">
+                <h3>
+                    Subtotal ( {shopCart.length} items) 
+                    :
+                    ${total}
+                
+                </h3>
+                <Link to="shipping" className="button primary full-width" type="button" 
+                disabled={shopCart.length === 0}>
+                    Proceed to chechout
+                </Link>
             </div>
         </>
     );

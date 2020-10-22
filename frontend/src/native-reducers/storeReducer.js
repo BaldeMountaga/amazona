@@ -11,20 +11,27 @@ import React from 'react';
 
 export const initialStore = {
     products: [],
-    cart: []
+    cart: [],
+    productImages: [],
 }
 
 export const storeReducer = (state, action) => {
     switch (action.type) {
-        case "SET_PRODUCTS":
+        case "SET_PRODUCTS":    
             return {
                 ...state,
                 products: action.payload
             }
         case "SET_CART":
+            console.log(action.product)
             return {
                 ...state,
-                cart: action.cart
+                cart: [...state.cart, action.product]
+            }
+        case "ADD_PRODUCT_IMAGE":
+            return {
+                ...state,
+                productImages: [...state.productImages, action.image]
             }
         default:
             return initialStore;

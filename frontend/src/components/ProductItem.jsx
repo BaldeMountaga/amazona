@@ -1,13 +1,17 @@
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useReducer, useState} from 'react';
 import axios from 'axios';
 import { GiShoppingCart } from "react-icons/gi";
 
 import Loader from "./Loader";
 import { appReducer, initialState } from '../native-reducers/CartReducer';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../App';
 
 
 const ProductImage = props => {
     const [imageSrc, setImageSrc] = useState(null);
+
+    const app_context = useContext(AppContext);
 
     const imageStyle = {
         width: "100%",
@@ -19,11 +23,14 @@ const ProductImage = props => {
         axios.get(`/image/${props.imageName}`)
             .then(response=> {
                 setImageSrc(response.data.imageUrl)
+                // const image = {}
+                // image[`${props.imageName}`] = response.data.imageUrl;
+                app_context.dispatchStoreState({type: "ADD_PRODUCT_IMAGE", image: {name: props.imageName, src: response.data.imageUrl}})
             })
             .catch(exception=> {
                 console.log(exception.response)
             })
-    })
+    }, [])
     return (
         imageSrc ? <img style={imageStyle} src={imageSrc}/> : <Loader />
     )
@@ -42,7 +49,7 @@ function ProductItem(props) {
     }
 
     const priceStyle = {
-        fontSize: 24,
+        fontSize: 20,
         padding: 0,
         margin: 0,
         float: "right",
@@ -50,32 +57,37 @@ function ProductItem(props) {
     }
 
     const nameStyle = {
-        fontSize: 22,
+        fontSize: 20,
         padding: 0,
         margin: 0,
         float: "left"
     }
 
-    //using our reducer in our main app added code for the cart
-    const [state, dispatch] = useReducer(appReducer, initialState);
+    const app_context = useContext(AppContext);
 
-    //creating a global context values added code for the cart
-    const app_context1 = {
-      state: state,
-      dispatch: dispatch
+    const product = {
+        ...props
+    }
+
+
+
+    const addToCart = () => {
+        console.log("Adding to cart")
+        app_context.dispatchStoreState({type: "SET_CART", product: product})
     }
   
     return (
             <div style={containerStyle} className="cart-content">
-                <ProductImage imageName={props.image} />
+                {/* I added the link to the image the will help whenever you click on the image you should go 
+                to the product details called productScreen.js */}
+                <Link to="/product/:id"><ProductImage imageName={props.image} /></Link>
                 <p style={priceStyle}>${props.price}</p>
                 <p style={nameStyle}>{props.name}</p>
                 
                 <div style={{marginTop: "4rem"}} className="cartContent">
-                        <button className="btnStyle" onClick={()=> dispatch({type: "ADD_TO_CART"})}>Add to card 
+                        <button className="btnStyle" onClick={addToCart}>Add to card 
                             <a className="iconStyle" href="#"><GiShoppingCart size="20"/><span>
-                                {/* added code for the cart */}
-                            {app_context1.state.cartLength}</span></a>
+                            </span></a>
                         </button>
                 </div>
             </div>

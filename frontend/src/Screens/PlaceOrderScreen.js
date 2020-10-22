@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory} from 'react-router-dom';
 //import { addToCart, removeFormCart } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { cartReducer } from '../reducers/cartReducers';
+import { AppContext } from '../App';
 // import from '../components/cartScreen.css';
 
 function PlaceOrderScreen(props) {
 
     //access the cart from redux store
-    const shopCart = useSelector(state => state.shopCart);
+    // const shopCart = useSelector(state => state.shopCart);
     const shipping = useSelector(state => state.shipping);
     const payment = useSelector(state => state.payment);
 
@@ -20,15 +21,24 @@ function PlaceOrderScreen(props) {
         history.push("/signin?redirect=shipping");
     }
 
-    console.log('CART', shopCart, shipping, payment );
+    // console.log('CART', shopCart, shipping, payment );
     
-    if(!shipping.address){
-        props.history.push("/shipping");
-    }else if(!payment.paymentMethod){
-        props.history.push("/payment");
-    }
+    // if(!shipping.address){
+    //     props.history.push("/shipping");
+    // }else if(!payment.paymentMethod){
+    //     props.history.push("/payment");
+    // }
 
-    const itemsPrice = shopCart.reduc((a, c) => a + c.price * c.qty, 0);
+    const app_context = useContext(AppContext);
+    let shopCart = app_context.storeState.cart
+
+    let allPrices = []
+    if (shopCart.length > 0) {
+        shopCart.map((item)=> allPrices.push(item.price) )
+     }
+    const itemsPrice = allPrices.reduce((a, b)=> {return a + b}, 0)
+
+    // const itemsPrice = shopCart.reduce((a, c) => a + c.price * c.qty, 0);
     const shippingPrice = itemsPrice > 100 ? 0 : 10;
     const taxPrice = 0.15 * itemsPrice;
     const totalPrice = itemsPrice + shippingPrice + taxPrice; 

@@ -33,7 +33,7 @@ const Header = () => {
             </div>
             < Search />
             <div className="header-links">
-                <a href="/cart"><GiShoppingCart size="30"/><sup className="number">0</sup></a>              
+                <Link to="/cart"><GiShoppingCart size="30"/><sup className="number">{app_context.storeState.cart.length}</sup></Link>              
                 {
                   app_context.appState.isAuthenticated ? <><Link to="/profile">{app_context.authState.name}</Link>
                    <a href="#" onClick={logout}>Logout</a></>

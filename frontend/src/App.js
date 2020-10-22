@@ -29,6 +29,7 @@ function App() {
   const [appState, dispatchAppState] = useReducer(mainAppReducer, initialAppState);
 
   useEffect(()=> {
+    console.log("In App.js");
     const cookie = document.cookie;
     if (cookie) {
       axios.get('/api/users/get-user', {
@@ -67,7 +68,7 @@ function App() {
                       <Route path = "/signin" component = { SigninScreen}/>
                       <Route path = "/register" component = { RegisterScreen}/>
                       <Route path = "/product/:id" component = { ProductScreen }/>
-                      <Route path = "/cart" component = { CartScreen }/>
+                      <Route path = "/cart" component = {CartScreen } />
                       <Route path = "/" exact={true} component = { HomeScreen }/>            
                   </Switch>
         </BrowserRouter>
