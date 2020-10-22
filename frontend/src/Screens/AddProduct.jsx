@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, Link} from 'react';
 import axios from 'axios';
 
 import Base from '../components/Base';
-import 'react-dropzone-uploader/dist/styles.css'
+import 'react-dropzone-uploader/dist/styles.css';
 
 const FormGroup = props => {
     
@@ -82,7 +82,6 @@ const AddProduct = props => {
         productFormData.append("countInStock", countInstock)
         productFormData.append("description", description)
 
-        //
         axios.post('/api/products/', productFormData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
@@ -105,15 +104,16 @@ const AddProduct = props => {
                 <main style={containerStyles} className="container">
                     <h3 style={{fontSize: 32, marginBottom: "2.8rem"}}>Create Product</h3>
                     <form onSubmit={addProduct} style={formStyles}>
-                        <FormGroup onChange={(e)=> setName(e.target.value)} value={name} label="Name" />
-                        <FormGroup onChange={(e)=> setPrice(e.target.value)} value={price} label="Price" />
-                         <FormGroup type='file' onChange={(e)=> setImage(e.target.files[0])} label="Image" />
-                        <FormGroup onChange={(e)=> setBrand(e.target.value)} value={brand} label="Brand" />
-                        <FormGroup onChange={(e)=> setCategory(e.target.value)} value={category} label="Category" />
-                        <FormGroup onChange={(e)=> setCountInstock(e.target.value)} value={countInstock} label="CountInStock" />
-                        <FormGroup onChange={(e)=> setDescription(e.target.value)} value={description} label="Description" />
-                        <FormButton type={'submit'} bgColor={'#f0c040'} name="Create" onClick={addProduct} />
-                        <FormButton bgColor={'#f0f0f0'} name={'Back'} />
+                            <FormGroup onChange={(e)=> setName(e.target.value)} value={name} label="Name" />
+                            <FormGroup onChange={(e)=> setPrice(e.target.value)} value={price} label="Price" />
+                            <FormGroup type='file' onChange={(e)=> setImage(e.target.files[0])} label="Image" />
+                            <FormGroup onChange={(e)=> setBrand(e.target.value)} value={brand} label="Brand" />
+                            <FormGroup onChange={(e)=> setCategory(e.target.value)} value={category} label="Category" />
+                            <FormGroup onChange={(e)=> setCountInstock(e.target.value)} value={countInstock} label="CountInStock" />
+                            <FormGroup onChange={(e)=> setDescription(e.target.value)} value={description} label="Description" />
+                            <FormButton type={'submit'} bgColor={'#f0c040'} name="Create" onClick={addProduct} />
+                            <FormButton bgColor={'#f0f0f0'} name={'Back'} />
+
                     </form>
                 </main>
             </Base>

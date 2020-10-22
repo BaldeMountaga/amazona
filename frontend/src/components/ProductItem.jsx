@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import axios from 'axios';
 import { GiShoppingCart } from "react-icons/gi";
 
 import Loader from "./Loader";
+import { appReducer, initialState } from '../native-reducers/CartReducer';
 
 
 const ProductImage = props => {
@@ -54,19 +55,27 @@ function ProductItem(props) {
         margin: 0,
         float: "left"
     }
-   
-    // const addToCart = () => {
 
-    // }
+    //using our reducer in our main app added code for the cart
+    const [state, dispatch] = useReducer(appReducer, initialState);
 
+    //creating a global context values added code for the cart
+    const app_context1 = {
+      state: state,
+      dispatch: dispatch
+    }
+  
     return (
             <div style={containerStyle} className="cart-content">
                 <ProductImage imageName={props.image} />
                 <p style={priceStyle}>${props.price}</p>
                 <p style={nameStyle}>{props.name}</p>
+                
                 <div style={{marginTop: "4rem"}} className="cartContent">
-                        <button className="btnStyle" >Add to card 
-                            <a className="iconStyle" href="#"><GiShoppingCart size="20"/></a>
+                        <button className="btnStyle" onClick={()=> dispatch({type: "ADD_TO_CART"})}>Add to card 
+                            <a className="iconStyle" href="#"><GiShoppingCart size="20"/><span>
+                                {/* added code for the cart */}
+                            {app_context1.state.cartLength}</span></a>
                         </button>
                 </div>
             </div>

@@ -62,8 +62,21 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 60px;
 }
+.foot-child{
+  display: flex;
+  list-style-type: none;
+}
+.foot-child li {
+  padding-right: 20px;
+  font-size: 15px;
+}
+
+.all-reserved{
+  color: #d4cccc;
+}
+
 .header-links a:hover{
   color:#ff8000;
 }

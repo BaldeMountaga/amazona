@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
 import {Link} from 'react-router-dom';
 import { GiShoppingCart } from "react-icons/gi";
 
@@ -34,8 +34,7 @@ const Header = () => {
             {/* search bar */}
             < Search />
             <div className="header-links">
-                <a href="cart.html"><GiShoppingCart size="30"/><sup>0</sup></a>
-                                
+                <a href="#"><GiShoppingCart size="30"/><sup className="number">0</sup></a>              
                 {
                   app_context.appState.isAuthenticated ? <><Link to="/profile">{app_context.authState.name}</Link> <a href="#" onClick={logout}>Logout</a></>
                   : <Link to="/signin">Sign In</Link>

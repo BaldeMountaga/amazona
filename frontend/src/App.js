@@ -6,17 +6,18 @@ import {initialStore, storeReducer} from './native-reducers/storeReducer';
 import {initialAuth, authReducer} from './native-reducers/authReducer'
 
 import './App.css';
-import CartScreen from './Screens/CartScreen';
-import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
-import SigninScreen from './Screens/SigninScreen';
-import RegisterScreen from './Screens/RegisterScreen';  
-import ProductsScreen from './Screens/ProductsScreens';
-import ShippingScreen from './Screens/ShippingScreen';
-import PaymentScreen from './Screens/PaymentScreen';
-import PlaceOrderScreen from './Screens/PlaceOrderScreen';
+import CartScreen from './screens/CartScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import SigninScreen from './screens/SigninScreen';
+import RegisterScreen from './screens/RegisterScreen';  
+import ProductsScreen from './screens/ProductsScreens';
+import ShippingScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import { initialAppState, mainAppReducer } from './native-reducers/mainAppReducer';
-import AddProduct from './Screens/AddProduct';
+import AddProduct from './screens/AddProduct';
+import { appReducer, initialState } from './native-reducers/CartReducer';
 
 
 export const AppContext = React.createContext();
@@ -43,7 +44,8 @@ function App() {
         console.log(exception)
       })
     }
-  }, [])
+  }, []);
+
 
   return (
   
@@ -53,7 +55,7 @@ function App() {
       storeState: storeState, 
       dispatchStoreState: dispatchStoreState,
       authState: authState,
-      dispatchAuthState: dispatchAuthState
+      dispatchAuthState: dispatchAuthState,
       }}>
         <BrowserRouter>
                   <Switch>
@@ -65,7 +67,7 @@ function App() {
                       <Route path = "/signin" component = { SigninScreen}/>
                       <Route path = "/register" component = { RegisterScreen}/>
                       <Route path = "/product/:id" component = { ProductScreen }/>
-                      <Route path = "/cart" render = {()=> <CartScreen /> }/> 
+                      <Route path = "/cart" component = { CartScreen }/>
                       <Route path = "/" exact={true} component = { HomeScreen }/>            
                   </Switch>
         </BrowserRouter>
